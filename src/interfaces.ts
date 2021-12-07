@@ -1,11 +1,13 @@
 export interface IUser {
-    name: string
+    nameEn?: string
+    nameRu?: string
     photo: string
     vacancy: string
     age: number
-    location: string
-    educationFull?: string
-    educationShort?: string
+    locationEn?: string
+    locationRu?: string
+    educationEn?: string
+    educationRu?: string
     number: number
     tg: string
     wa: number
@@ -13,25 +15,23 @@ export interface IUser {
     github: string
 }
 
-export interface IJobs {
-    date: string
-    company: string
-    posname: string
-    info: string
-}
-
 export interface IAbout {
-    textFull?: string
-    textShort?: string
+    textFullEn?: string
+    textFullRu?: string
+    textShortEn?: string
+    textShortRu?: string
 }
 
 export interface ISkills {
-    hardSkillsFull?: string[]
-    softSkillsFull?: string[]
+    hardSkills: string[];
+    softSkillsFullEn?: string[];
+    softSkillsFullRu?: string[];
 }
 
 export interface IPortfolio {
-    name: string
-    link: string
-    text: string
+    name: string;
+    html_url: string;
+    description: string;
+    language: string;
+    updated_at: string;
 }

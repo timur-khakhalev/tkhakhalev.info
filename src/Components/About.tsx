@@ -7,8 +7,10 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
 
 const user: IAbout = {
-    textFull: resume.about.full,
-    textShort: resume.about.short
+    textFullEn: resume.about.fullEn,
+    textFullRu: resume.about.fullRu,
+    textShortEn: resume.about.shortEn,
+    textShortRu: resume.about.shortRu
 }
 
 const useStyles = makeStyles({
@@ -24,9 +26,19 @@ const useStyles = makeStyles({
 export const About: FC = () => {
     const classes = useStyles();
     const toggleStatus = useSelector((state: RootState) => state.versionToggle.version);
-    return (
+    const toggleLang = useSelector((state: RootState) => state.langToggle.lang);
+    if (toggleLang) {
+        return (
             <Typography align="justify" variant="body1" className={classes.txt} gutterBottom>
-            {toggleStatus ? user.textShort : user.textFull}
+                {toggleStatus ? user.textShortEn : user.textFullEn}
             </Typography>
-    );
+        );
+    } else {
+        return (
+            <Typography align="justify" variant="body1" className={classes.txt} gutterBottom>
+                {toggleStatus ? user.textShortRu : user.textFullRu}
+            </Typography>
+        );
+    }
+    
 };

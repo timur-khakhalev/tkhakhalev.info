@@ -1,12 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import versionToggleReducer from "./slice";
 import printToggleReducer from "./slice";
+import langToggleReducer from "./slice";
+import checkLoggedInReducer from "./slice";
 
 
 export const store = configureStore({
     reducer: {
         versionToggle: versionToggleReducer,
-        printToggle: printToggleReducer
+        printToggle: printToggleReducer,
+        langToggle: langToggleReducer,
+        checkLoggedIn: checkLoggedInReducer
     },
 });
 

@@ -7,6 +7,6 @@ export class GithubController {
 
   @Get()
   getData() {
-    return this.githubService.getRepos();
+    return this.githubService.getRepos();    
   }
 }

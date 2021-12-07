@@ -15,13 +15,15 @@ import {useSelector} from 'react-redux'
 import {RootState} from '../Redux/store'
 
 const user : IUser = {
-    name: resume.name,
+    nameRu: resume.nameRu,
+    nameEn: resume.nameEn,
     photo: Photo,
     vacancy: resume.position,
     age: resume.age,
-    location: resume.location,
-    educationFull: resume.education.full,
-    educationShort: resume.education.short,
+    locationEn: resume.locationEn,
+    locationRu: resume.locationRu,
+    educationEn: resume.educationEn,
+    educationRu: resume.educationRu,
     number: resume.number,
     tg: resume.tg,
     wa: resume.wa,
@@ -51,8 +53,8 @@ const useStyles = makeStyles({
 
 });
 export const Contacts : FC = () => {
-    const toggleVersion = useSelector((state : RootState) => state.versionToggle.version);
     const togglePrint = useSelector((state: RootState) => state.printToggle.print);
+    const toggleLang = useSelector((state: RootState) => state.langToggle.lang);
     const classes = useStyles();
     const [value, setValue] = React.useState(false);
 
@@ -66,17 +68,17 @@ export const Contacts : FC = () => {
             direction="row"
             justifyContent="space-between"
             className={classes.root}>
-            <Grid item md={6} sm={6} xs={togglePrint ? 6 : 12} lg={6}>
+            <Grid item md={6} sm={6} xs={togglePrint ? 7 : 12} lg={6}>
                 <Typography variant="h3">
-                    {user.name}
+                    {toggleLang ? user.nameEn : user.nameRu}
                 </Typography>
                 <Typography gutterBottom variant="h5">
-                    {user.vacancy}, {user.age} лет. {user.location}
+                    {user.vacancy}, {user.age + ( toggleLang ? ' years old': ' лет' )}. {toggleLang ? user.locationEn : user.locationRu}
                 </Typography>
                 <Typography gutterBottom variant="body1">
-                    {toggleVersion
-                        ? user.educationShort
-                        : user.educationFull}
+                    {toggleLang
+                        ? user.educationEn
+                        : user.educationRu}
                 </Typography>
                 <Stack direction={togglePrint ? 'row' : 'column'} spacing={2}>
                 {togglePrint ? <Box>
@@ -87,7 +89,7 @@ export const Contacts : FC = () => {
                 </Box> : <></> }
                 
                 <Box className={togglePrint ? classes.buttonPrint : classes.button}>
-                    <Tooltip disableFocusListener placement="top" title={value ? 'Скопировано' : 'Скопировать'}>
+                    <Tooltip disableFocusListener placement="top" title={value ? 'Copied' : 'Copy'}>
                             <Button size="small" color="primary" variant={togglePrint ? 'text' : 'contained'} onClick={handleClick} className={classes.button} startIcon={< Email />}>{user.email}</Button>
                     </Tooltip>
                 </Box>
@@ -116,8 +118,8 @@ export const Contacts : FC = () => {
                     </Box> : <></>}
                 </Stack>
             </Grid>
-            <Grid item md={5} sm={6} xs={togglePrint ? 5 : 12} lg={4}>
-                <Box component="img" sx={togglePrint ? {maxHeight: '18em'} : {maxHeight: '20.5em'}} src={user.photo} className={classes.photo} />
+            <Grid item md={5} sm={6} xs={togglePrint ? 4 : 12} lg={4}>
+                <Box component="img" sx={togglePrint ? {maxHeight: '13em'} : {maxHeight: '20.5em'}} src={user.photo} className={classes.photo} />
             </Grid>
         </Grid>
     );

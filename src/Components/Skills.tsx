@@ -7,10 +7,11 @@ import Typography from '@mui/material/Typography';
 import {useSelector} from 'react-redux'
 import {RootState} from '../Redux/store'
 
-const user : ISkills = {
-    hardSkillsFull: resume.skills.hardSkillsFull,
-    softSkillsFull: resume.skills.softSkillsFull,
-}
+// const user: ISkills = {
+//     hardSkills: resume.skills.hardSkills.languages,
+//     softSkillsFullEn: resume.skills.softSkillsFullEn,
+//     softSkillsFullRu: resume.skills.softSkillsFullRu,
+// }
 
 const useStyles = makeStyles({
     root: {
@@ -32,6 +33,7 @@ const useStyles = makeStyles({
 export const Skills : FC = () => {
     const classes = useStyles();
     const toggleStatus = useSelector((state: RootState) => state.versionToggle.version);
+    const toggleLang = useSelector((state: RootState) => state.langToggle.lang);
     return ( 
     <>
     <Grid 
@@ -39,27 +41,25 @@ export const Skills : FC = () => {
     className={classes.root}>
         <Grid item xs={12}>
                 <Typography variant="h4">
-                    Навыки
+                    {toggleLang ? 'Skills' : 'Навыки'}
                 </Typography>
         </Grid>
         <Grid item xs={12}>
             <Typography align="center" variant="h5">
-                Мой стэк
+                {toggleLang ? 'My stack' : 'Мой стэк'}
             </Typography>
         </Grid>
         </Grid>
-        <Grid container justifyContent="center" className={classes.skills}> {
-        Object
-            .entries(user.hardSkillsFull !)
-            .map(([k, v]) => {
+        {/* <Grid container justifyContent="center" className={classes.skills}> {
+       user.hardSkills.languages.map((k: object) => {
                 return <Grid item xs={4}>
-                    <Typography variant="body1" className={classes.box}>{v}</Typography>
+                    <Typography variant="body1" className={classes.box}>{k}</Typography>
                 </Grid>
             })
-        }</Grid>
+        }</Grid> */}
         {!toggleStatus ? 
         <>
-            <Grid container className={classes.root}>
+            {/* <Grid container className={classes.root}>
                 <Grid item xs={12}>
                     <Typography gutterBottom align="center" variant="h5">
                         Soft skills
@@ -67,14 +67,22 @@ export const Skills : FC = () => {
                 </Grid>
             </Grid>
             <Grid container justifyContent="space-between" className={classes.root}>
-                {Object
-                .entries(user.softSkillsFull !)
+                {toggleLang ? Object
+                .entries(user.softSkillsFullEn !)
                 .map(([k, v]) => {
                     return <Grid item xs={12}>
                         <Typography variant="body1" className={classes.box2}>{v}</Typography>
                     </Grid>
-                })}
-            </Grid>
+                }) : 
+                Object
+                    .entries(user.softSkillsFullRu!)
+                    .map(([k, v]) => {
+                        return <Grid item xs={12}>
+                            <Typography variant="body1" className={classes.box2}>{v}</Typography>
+                        </Grid>
+                    })
+                }
+            </Grid> */}
             </>
             
         : <></>}

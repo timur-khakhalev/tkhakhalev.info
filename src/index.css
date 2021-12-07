@@ -11,3 +11,8 @@ a {
   text-decoration: underline;
   color: inherit
 }
+
+.imgerror {
+  display: block;
+  margin: 0 auto;
+}

@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import {Jobs} from './Jobs'
-import {About} from './About';
-import {Navbar} from './Navbar'
-import {Skills} from './Skills';
-import {Contacts} from './Contacts'
-import {Portfolio} from './Portfolio'
+import {Jobs} from '../Components/Jobs'
+import {About} from '../Components/About';
+import {Navbar} from '../Components/Navbar'
+import {Skills} from '../Components/Skills';
+import {Contacts} from '../Components/Contacts'
+import {Portfolio} from '../Components/Portfolio'
 import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -89,11 +89,14 @@ const useStyles = makeStyles({
     mainPLast: {
         margin: '1em',
         padding: '1em'
-    }    
+    },
+    mainPLastShortEn: {
+        marginTop: '8em!important'
+    }
 });
 
 const printStyle = {
-    marginTop: '3em',
+    marginTop: '1em',
 }
 
 const none = {
@@ -102,6 +105,7 @@ export const Resume : FC = () => {
     const isMobile = useMediaQuery('(max-width:576px)');
     const togglePrint = useSelector((state: RootState) => state.printToggle.print);
     const toggleStatus = useSelector((state: RootState) => state.versionToggle.version);
+    const toggleLang = useSelector((state: RootState) => state.langToggle.lang);
     const classes = useStyles();
     return (
         <ThemeProvider theme={togglePrint ? printTheme : theme}>
@@ -119,7 +123,7 @@ export const Resume : FC = () => {
             <Grid item xl={12}>
                 <Paper className={isMobile ? classes.mainPMobile : classes.mainP}>
                         <Typography variant="h4" gutterBottom>
-                        Прошлая работа
+                        {toggleLang ? 'Last Job' : 'Прошлая работа'}
                     </Typography>
                     <Jobs/>
                 </Paper>
@@ -128,7 +132,7 @@ export const Resume : FC = () => {
                     <Box sx={(!toggleStatus && togglePrint) ? printStyle : none}>
                 <Paper className={classes.mainP}>
                     <Typography variant="h4">
-                        О себе
+                        {toggleLang ? 'About Me' : 'О себе'}
                     </Typography>
                     <About/>
                 </Paper>
@@ -138,7 +142,7 @@ export const Resume : FC = () => {
                 <Paper className={classes.mainP}>
                     <Skills/>
                 </Paper>
-                <Paper className={classes.mainPLast}>
+                <Paper className={toggleStatus && togglePrint && toggleLang ? classes.mainPLastShortEn : classes.mainPLast}>
                     <Portfolio/>
                 </Paper>
             </Container>

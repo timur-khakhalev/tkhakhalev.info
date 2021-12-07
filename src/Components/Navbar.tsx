@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {useDispatch} from 'react-redux'
-import {printToggle, versionToggle} from '../Redux/slice'
+import {printToggle, versionToggle, langToggle} from '../Redux/slice'
 import {makeStyles } from '@mui/styles';
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
@@ -13,6 +13,7 @@ import Stack from '@mui/material/Stack';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
@@ -21,6 +22,9 @@ const useStyles = makeStyles({
     paper: {
         margin: '1em',
         padding: '1em'
+    },
+    lang: {
+        display: 'inline-block'
     }
 })
 
@@ -44,6 +48,10 @@ export const Navbar : FC = () => {
     const [swState,
         setState] = React.useState({checkedA: false});
 
+
+    const handleLangToggle = () => {
+        dispatch(langToggle());
+    }
     const handleChangeSwitch = (event : React.ChangeEvent < HTMLInputElement >) => {
         setState({
             ...swState,
@@ -52,6 +60,7 @@ export const Navbar : FC = () => {
         dispatch(versionToggle());
     };
     const togglePrint = useSelector((state: RootState) => state.printToggle.print);
+    const toggleLang = useSelector((state: RootState) => state.langToggle.lang);
     if (togglePrint) return (<></>) 
     else {
 
@@ -74,7 +83,13 @@ export const Navbar : FC = () => {
                         </FormControl>
                     </Grid>
                     <Grid item xs={3}>
-                        <Button onClick={handlePrintToggle} size="large" variant="outlined" color="info" startIcon={< Print />}>Печать</Button>
+                        <Button onClick={handlePrintToggle} size="large" variant="outlined" color="info" startIcon={< Print />}/>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <ButtonGroup color="info" aria-label="button group">
+                                <Button onClick={handleLangToggle} variant={toggleLang ? 'contained' : 'outlined'} >en</Button>
+                                <Button onClick={handleLangToggle} variant={!toggleLang ? 'contained' : 'outlined'} >ru</Button>
+                        </ButtonGroup>
                     </Grid>
                 </Grid>
             </AppBar>
@@ -90,9 +105,13 @@ export const Navbar : FC = () => {
                                     handleChangeSwitch
                                 }
                                 name="checkedA" />}
-                            label="Полная версия" />
+                            label={toggleLang ? 'Full version': 'Полная версия'} />
                     </FormControl>
-                    <Button onClick={handlePrintToggle} size="large" variant="outlined" startIcon={< Print />}>Печать</Button>
+                    <Button onClick={handlePrintToggle} size="large" variant="outlined" startIcon={< Print />}>{toggleLang ? 'Print' : 'Печать'}</Button>
+                    <ButtonGroup aria-label="button group">
+                        <Button onClick={handleLangToggle} variant={toggleLang ? 'contained' : 'outlined'} >en</Button>
+                        <Button onClick={handleLangToggle} variant={!toggleLang ? 'contained' : 'outlined'} >ru</Button>
+                    </ButtonGroup>
                 </Stack>
             </Paper>
         
