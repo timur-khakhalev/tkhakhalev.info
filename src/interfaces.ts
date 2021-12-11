@@ -35,3 +35,30 @@ export interface IPortfolio {
     language: string;
     updated_at: string;
 }
+
+export interface IFormValues {
+    _id: string;
+    nameRu: string;
+    nameEn: string;
+    position: string;
+    age: string;
+    location: string;
+    educationRu: string;
+    educationEn: string;
+    number: number;
+    telegram: string;
+    email: string;
+    github: string;
+    lastjobEn: string;
+    lastjobRu: string;
+    about: { shortRu: string, shortEn: string, fullRu: string, fullEn: string },
+    hardSkills: { languages: string, technologies: string, patterns: string, instruments: string },
+    softSkillsEn: string,
+    softSkillsRu: string,
+    photo: string
+};
+
+export interface ISnackbar {
+    message: string,
+    type: string
+}

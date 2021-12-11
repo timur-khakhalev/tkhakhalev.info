@@ -6,15 +6,14 @@ import { GithubController } from './github/github.controller';
 import { GithubService } from './github/github.service';
 import { DatabaseController } from './database/database.controller';
 import { DatabaseService } from './database/database.service';
-import { Contacts, ContactsSchema } from './database/schema/contacts.schema';
 import { AuthController } from './auth/auth.controller'
 import { AuthModule } from './auth/auth.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({isGlobal: true}), HttpModule, MongooseModule.forRoot(`mongodb+srv://${process.env.MONGODB_CREDS}@cluster0.bzoxw.mongodb.net/resumedata?retryWrites=true&w=majority`),
-  MongooseModule.forFeature([{name: Contacts.name, schema: ContactsSchema}]),
-  AuthModule],
+  imports: [ConfigModule.forRoot({isGlobal: true}), HttpModule,
+  AuthModule, DatabaseModule],
   controllers: [GithubController, DatabaseController, AuthController],
-  providers: [GithubService, DatabaseService],
+  providers: [GithubService],
 })
 export class AppModule {}

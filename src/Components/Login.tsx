@@ -26,7 +26,7 @@ export const Login: FC = () => {
             }
         }).then((response) => {
             localStorage.setItem('token', response.data.access_token)
-            dispatch(checkLoggedIn({payload: true}))
+            dispatch(checkLoggedIn({payload: response.data.access_token}))
         })
     }
     return (

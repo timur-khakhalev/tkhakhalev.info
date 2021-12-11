@@ -1,17 +1,9 @@
 import {FC} from 'react';
-import resume from '../resume.json'
-import {ISkills} from '../interfaces';
 import {makeStyles } from '@mui/styles';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import {Grid, Typography, Box} from '@mui/material/';
 import {useSelector} from 'react-redux'
 import {RootState} from '../Redux/store'
-
-// const user: ISkills = {
-//     hardSkills: resume.skills.hardSkills.languages,
-//     softSkillsFullEn: resume.skills.softSkillsFullEn,
-//     softSkillsFullRu: resume.skills.softSkillsFullRu,
-// }
+import { Loading } from './Loading';
 
 const useStyles = makeStyles({
     root: {
@@ -34,58 +26,119 @@ export const Skills : FC = () => {
     const classes = useStyles();
     const toggleStatus = useSelector((state: RootState) => state.versionToggle.version);
     const toggleLang = useSelector((state: RootState) => state.langToggle.lang);
-    return ( 
-    <>
-    <Grid 
-    container
-    className={classes.root}>
-        <Grid item xs={12}>
-                <Typography variant="h4">
-                    {toggleLang ? 'Skills' : 'Навыки'}
-                </Typography>
-        </Grid>
-        <Grid item xs={12}>
-            <Typography align="center" variant="h5">
-                {toggleLang ? 'My stack' : 'Мой стэк'}
-            </Typography>
-        </Grid>
-        </Grid>
-        {/* <Grid container justifyContent="center" className={classes.skills}> {
-       user.hardSkills.languages.map((k: object) => {
-                return <Grid item xs={4}>
-                    <Typography variant="body1" className={classes.box}>{k}</Typography>
-                </Grid>
-            })
-        }</Grid> */}
-        {!toggleStatus ? 
+    const items = useSelector((state: RootState) => state.itemsDelivery.items);
+    if (items) {
+        return ( 
         <>
-            {/* <Grid container className={classes.root}>
-                <Grid item xs={12}>
-                    <Typography gutterBottom align="center" variant="h5">
-                        Soft skills
+        <Grid 
+        container
+        className={classes.root}>
+            <Grid item xs={12}>
+                    <Typography variant="h4">
+                        {toggleLang ? 'Skills' : 'Навыки'}
                     </Typography>
-                </Grid>
             </Grid>
-            <Grid container justifyContent="space-between" className={classes.root}>
-                {toggleLang ? Object
-                .entries(user.softSkillsFullEn !)
-                .map(([k, v]) => {
-                    return <Grid item xs={12}>
-                        <Typography variant="body1" className={classes.box2}>{v}</Typography>
-                    </Grid>
-                }) : 
-                Object
-                    .entries(user.softSkillsFullRu!)
-                    .map(([k, v]) => {
-                        return <Grid item xs={12}>
-                            <Typography variant="body1" className={classes.box2}>{v}</Typography>
-                        </Grid>
-                    })
+            <Grid item xs={12}>
+                <Typography align="center" variant="h5">
+                    {toggleLang ? 'My stack' : 'Мой стэк'}
+                </Typography>
+            </Grid>
+            </Grid>
+            <Grid container justifyContent="center" className={classes.skills}> 
+            {
+            Object.entries(items.hardSkills).map(([k, v]) => {
+                switch(k) {
+                    case 'languages':
+                        return <>
+                        <Grid item xs={12}><Typography variant="h6" color="initial">
+                            Languages, Frameworks, etc
+                        </Typography></Grid>
+                        {v.split(';').map((_v) => {
+                            if (v) {
+                            console.log(_v)
+                                return <>
+                                <Grid item xs={3}>
+                                <Typography variant="body1" className={classes.box}>{_v}</Typography>
+                            </Grid></>
+                            }
+                        })}</>
+                    case 'technologies':
+                        return <>
+                            <Grid item xs={12}><Typography variant="h6" color="initial">
+                                Technologies
+                            </Typography></Grid>
+                            {v.split(';').map((_v) => {
+                                if (v) {
+                                    console.log(_v)
+                                    return <>
+                                        <Grid item xs={3}>
+                                            <Typography variant="body1" className={classes.box}>{_v}</Typography>
+                                        </Grid></>
+                                }
+                            })}</>
+                    case 'patterns':
+                        return <>
+                            <Grid item xs={12}><Typography variant="h6" color="initial">
+                                Patterns
+                            </Typography></Grid>
+                            {v.split(';').map((_v) => {
+                                if (v) {
+                                    console.log(_v)
+                                    return <>
+                                        <Grid item xs={3}>
+                                            <Typography variant="body1" className={classes.box}>{_v}</Typography>
+                                        </Grid></>
+                                }
+                            })}</>
+                    case 'instruments':
+                        return <>
+                            <Grid item xs={12}><Typography variant="h6" color="initial">
+                                Instruments
+                            </Typography></Grid>
+                            {v.split(';').map((_v) => {
+                                if (v) {
+                                    console.log(_v)
+                                    return <>
+                                        <Grid item xs={3}>
+                                            <Typography variant="body1" className={classes.box}>{_v}</Typography>
+                                        </Grid></>
+                                }
+                            })}</>
+                    default:
+                        return <></>
                 }
-            </Grid> */}
-            </>
-            
-        : <></>}
-    </>
-    );
+                    
+                })
+            }</Grid>
+            {!toggleStatus ? 
+            <>
+                <Grid container className={classes.root}>
+                    <Grid item xs={12}>
+                        <Typography gutterBottom align="center" variant="h5">
+                            Soft skills
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid container justifyContent="space-between" className={classes.root}>
+                    {toggleLang ? 
+                    items.softSkillsEn.split(';')
+                    .map((item) => {
+                        return <Grid item xs={12}>
+                            <Typography variant="body1" className={classes.box2}>{item}</Typography>
+                        </Grid>
+                    }) : 
+                    items.softSkillsRu.split(';')
+                        .map((item) => {
+                            return <Grid item xs={12}>
+                                <Typography variant="body1" className={classes.box2}>{item}</Typography>
+                            </Grid>
+                        })
+                    }
+                </Grid>
+                </>
+                
+            : <></>}
+        </>
+        );
+    } else { return (<Loading/>)}
 };

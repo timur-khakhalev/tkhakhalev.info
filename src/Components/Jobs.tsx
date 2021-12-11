@@ -1,20 +1,9 @@
 import { FC } from 'react';
-import resume from '../resume.json'
 import { makeStyles } from '@mui/styles';
-
 import Typography from '@mui/material/Typography';
 import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
-
-interface IJobsShort {
-    jobsEn: string,
-    jobsRu: string
-}
-
-const user: IJobsShort = {
-    jobsEn: resume.lastjobShortEn,
-    jobsRu: resume.lastjobShortRu,
-}
+import { Loading } from './Loading';
 
 const useStyles = makeStyles({
     table: {
@@ -28,11 +17,15 @@ const useStyles = makeStyles({
 export const Jobs : FC = () => {
     const classes = useStyles();
     const toggleLang = useSelector((state: RootState) => state.langToggle.lang);
-    
-    return (
-        <Typography variant="body1" className={classes.text}>
-            {toggleLang ? user.jobsEn : user.jobsRu}
-        </Typography>
-        )
+    const items = useSelector((state: RootState) => state.itemsDelivery.items);
+    if (items) {
+        return (
+            <Typography variant="body1" className={classes.text}>
+                {toggleLang ? items.lastjobEn : items.lastjobRu}
+            </Typography>
+            )
+    } else {
+        return (<Loading/>)
+    }
 };
 

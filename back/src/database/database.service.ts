@@ -1,21 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
-import { ContactsDto } from './schema/contacts.dto';
-import { Contacts, ContactsDocument } from './schema/contacts.schema';
+import { ResumeInfoDto } from './schema/resumeinfo.dto';
+import { ResumeInfo, ResumeInfoDocument } from './schema/resumeinfo.schema';
 
 @Injectable()
 export class DatabaseService {
     constructor(
-        @InjectModel(Contacts.name) private contactsModel: Model<ContactsDocument>
+        @InjectModel(ResumeInfo.name) private ResumeInfoModel: Model<ResumeInfoDocument>
     ){}
 
-    async addData(addDataDto: ContactsDto): Promise<Contacts> {
-        const createdData = new this.contactsModel(addDataDto)
+    async addData(addDataDto: ResumeInfoDto): Promise<ResumeInfo> {
+        const createdData = new this.ResumeInfoModel(addDataDto)
         return createdData.save()
     }
 
-    async getData(): Promise<Contacts[]> {
-        return this.contactsModel.find().exec()
+    async patchData(query: any, newString: any): Promise<any> {
+        return await this.ResumeInfoModel.findOneAndUpdate(query, newString)
+    }
+
+    async getData(): Promise<ResumeInfo[]> {
+        return this.ResumeInfoModel.find().exec()
     }
 }

@@ -1,4 +1,5 @@
 import React, {FC} from 'react'
+import { ItemsCMS } from '../Components/ItemsCMS'
 
 interface Props {
     
@@ -6,8 +7,6 @@ interface Props {
 
 export const CMS: FC = () => {
     return (
-        <div>
-            this is my CMS
-        </div>
+        <ItemsCMS/>
     )
 }

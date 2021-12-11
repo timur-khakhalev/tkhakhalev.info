@@ -12,5 +12,6 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
+        "no-fallthrough": 0
     }
 };

@@ -1,35 +1,12 @@
 import React, {FC} from 'react';
-import resume from '../resume.json'
-import {IUser} from '../interfaces'
 import copy from 'clipboard-copy'
-import Photo from '../img/photo.JPG'
 import { makeStyles } from '@mui/styles';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box'
+import {Typography, Grid, Box, Button, Tooltip, Stack} from '@mui/material/';
 import { Telegram, Email, GitHub, Call, Language} from '@mui/icons-material';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import Stack from '@mui/material/Stack';
 import {useSelector} from 'react-redux'
 import {RootState} from '../Redux/store'
-
-const user : IUser = {
-    nameRu: resume.nameRu,
-    nameEn: resume.nameEn,
-    photo: Photo,
-    vacancy: resume.position,
-    age: resume.age,
-    locationEn: resume.locationEn,
-    locationRu: resume.locationRu,
-    educationEn: resume.educationEn,
-    educationRu: resume.educationRu,
-    number: resume.number,
-    tg: resume.tg,
-    wa: resume.wa,
-    email: resume.email,
-    github: resume.github
-}
+import { calculateAge } from '../utils';
+import { Loading } from './Loading';
 
 const useStyles = makeStyles({
     root: {
@@ -55,13 +32,14 @@ const useStyles = makeStyles({
 export const Contacts : FC = () => {
     const togglePrint = useSelector((state: RootState) => state.printToggle.print);
     const toggleLang = useSelector((state: RootState) => state.langToggle.lang);
+    const items = useSelector((state: RootState) => state.itemsDelivery.items);
     const classes = useStyles();
     const [value, setValue] = React.useState(false);
-
     const handleClick = () => {
-        copy(user.email)
+        copy(items.email)
         setValue(true)
     }
+    if (items) {
     return (
         <Grid
             container
@@ -70,27 +48,27 @@ export const Contacts : FC = () => {
             className={classes.root}>
             <Grid item md={6} sm={6} xs={togglePrint ? 7 : 12} lg={6}>
                 <Typography variant="h3">
-                    {toggleLang ? user.nameEn : user.nameRu}
+                    {toggleLang ? items.nameEn : items.nameRu}
                 </Typography>
                 <Typography gutterBottom variant="h5">
-                    {user.vacancy}, {user.age + ( toggleLang ? ' years old': ' лет' )}. {toggleLang ? user.locationEn : user.locationRu}
+                    {items.position}, {calculateAge(items.age) + ( toggleLang ? ' years old': ' лет' )}. {items.location}
                 </Typography>
                 <Typography gutterBottom variant="body1">
                     {toggleLang
-                        ? user.educationEn
-                        : user.educationRu}
+                        ? items.educationEn
+                        : items.educationRu}
                 </Typography>
                 <Stack direction={togglePrint ? 'row' : 'column'} spacing={2}>
                 {togglePrint ? <Box>
                         <Button 
                         size="small"
                         variant="text"
-                        startIcon={<Call/>}>+{user.number}</Button>
+                        startIcon={<Call/>}>+{items.number}</Button>
                 </Box> : <></> }
                 
                 <Box className={togglePrint ? classes.buttonPrint : classes.button}>
                     <Tooltip disableFocusListener placement="top" title={value ? 'Copied' : 'Copy'}>
-                            <Button size="small" color="primary" variant={togglePrint ? 'text' : 'contained'} onClick={handleClick} className={classes.button} startIcon={< Email />}>{user.email}</Button>
+                            <Button size="small" color="primary" variant={togglePrint ? 'text' : 'contained'} onClick={handleClick} className={classes.button} startIcon={< Email />}>{items.email}</Button>
                     </Tooltip>
                 </Box>
                 </Stack>
@@ -100,7 +78,7 @@ export const Contacts : FC = () => {
                         size="small"
                         variant={togglePrint ? 'text' : 'contained'}
                         startIcon={< Telegram />}
-                        href={`https://t.me/${user.tg}`}>{user.tg}</Button>
+                        href={`https://t.me/${items.telegram}`}>{items.telegram}</Button>
                 </Box>
 
                 <Box className={togglePrint ? classes.buttonPrint : classes.button}>
@@ -108,7 +86,7 @@ export const Contacts : FC = () => {
                         size="small"
                         startIcon={< GitHub />}
                         variant={togglePrint ? 'text' : 'contained' }
-                            href={user.github}>{togglePrint ? user.github.replace(/https:\/\/github.com\//, '') : user.github.replace(/https:\/\//, '')}</Button>
+                            href={items.github}>{togglePrint ? items.github.replace(/https:\/\/github.com\//, '') : items.github.replace(/https:\/\//, '')}</Button>
                 </Box>
                     {togglePrint ? <Box>
                         <Button
@@ -119,8 +97,13 @@ export const Contacts : FC = () => {
                 </Stack>
             </Grid>
             <Grid item md={5} sm={6} xs={togglePrint ? 4 : 12} lg={4}>
-                <Box component="img" sx={togglePrint ? {maxHeight: '13em'} : {maxHeight: '20.5em'}} src={user.photo} className={classes.photo} />
+                <Box component="img" sx={togglePrint ? {maxHeight: '13em'} : {maxHeight: '20.5em'}} src={items.photo} className={classes.photo} />
             </Grid>
         </Grid>
     );
+    } else {
+        return (
+            <Loading/>
+        )
+    }
 };

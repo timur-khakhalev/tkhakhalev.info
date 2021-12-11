@@ -8,15 +8,15 @@ import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip'
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography';
 import { GitHub } from '@mui/icons-material';
 import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
-
-
-
+import { Loading } from './Loading';
+import dotenv from 'dotenv'
+dotenv.config()
+console.log(process.env.GITHUB_TOKEN)
 
 const useStyles = makeStyles({
     root: {
@@ -44,9 +44,9 @@ export const Portfolio: FC = () => {
 
     const [gitdata, setGitdata] = useState<any>()
     useEffect(() => {
-        axios.get(`https://${process.env.BACKEND_URL}`).then((response) => {
-            setGitdata(response.data)
-        })
+        // axios.get(`http://localhost:3000/github`).then((response) => {
+        //     setGitdata(response.data)
+        // })
     }, [])
     if (gitdata) {
         return (
@@ -73,10 +73,10 @@ export const Portfolio: FC = () => {
                                             <Typography paragraph variant="caption" color="initial">
                                                 Commits amount: {data[0]}
                                             <Box>
-                                            <Chip label={data[1].language} />
+                                            <Chip sx={{mr: '.5em'}} label={data[1].language} />
                                             {data[1].topics.map((t: string) => {
                                                 console.log(t)
-                                                return <Chip sx={{my: '.5em'}} label={t}/>
+                                                return <Chip sx={{my: '.5em', mr: '.5em'}} label={t}/>
                                             })}
                                             </Box>
                                             <Typography>
@@ -94,7 +94,7 @@ export const Portfolio: FC = () => {
         );
     } else {
         return (
-            <Typography variant="h6" align="center">Loading.. <CircularProgress/></Typography>
+            <Loading/>
         )
     }
 };

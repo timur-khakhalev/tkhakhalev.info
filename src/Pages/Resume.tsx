@@ -1,21 +1,17 @@
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
+import axios from 'axios'
 import {makeStyles } from '@mui/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+import { Typography, Box, CssBaseline, Grid, Paper, Container, useMediaQuery } from '@mui/material/';
 import {Jobs} from '../Components/Jobs'
 import {About} from '../Components/About';
 import {Navbar} from '../Components/Navbar'
 import {Skills} from '../Components/Skills';
 import {Contacts} from '../Components/Contacts'
 import {Portfolio} from '../Components/Portfolio'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../Redux/store'
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Container from '@mui/material/Container';
+import { itemsDelivery } from '../Redux/slice';
 
 
 declare module '@mui/material/styles' {
@@ -101,12 +97,43 @@ const printStyle = {
 
 const none = {
 }
+
+    
 export const Resume : FC = () => {
     const isMobile = useMediaQuery('(max-width:576px)');
     const togglePrint = useSelector((state: RootState) => state.printToggle.print);
     const toggleStatus = useSelector((state: RootState) => state.versionToggle.version);
     const toggleLang = useSelector((state: RootState) => state.langToggle.lang);
+    const items = useSelector((state: RootState) => state.itemsDelivery.items);
     const classes = useStyles();
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        axios.get('http://localhost:3000/database').then((response) => {
+            dispatch(itemsDelivery(({
+                _id: response.data[0]._id,
+                photo: response.data[0].photo,
+                nameRu: response.data[0].nameRu,
+                nameEn: response.data[0].nameEn,
+                position: response.data[0].position,
+                age: response.data[0].age,
+                location: response.data[0].location,
+                educationRu: response.data[0].educationRu,
+                educationEn: response.data[0].educationEn,
+                number: response.data[0].number,
+                telegram: response.data[0].telegram,
+                email: response.data[0].email,
+                github: response.data[0].github,
+                lastjobEn: response.data[0].lastjobEn,
+                lastjobRu: response.data[0].lastjobRu,
+                hardSkills: { languages: response.data[0].hardSkills[0].languages, technologies: response.data[0].hardSkills[0].technologies, patterns: response.data[0].hardSkills[0].patterns, instruments: response.data[0].hardSkills[0].instruments },
+                about: { shortRu: response.data[0].about[0].shortRu, shortEn: response.data[0].about[0].shortEn, fullRu: response.data[0].about[0].fullRu, fullEn: response.data[0].about[0].fullEn },
+                softSkillsEn: response.data[0].softSkillsEn,
+                softSkillsRu: response.data[0].softSkillsRu
+            })))
+        })
+    }, [])
     return (
         <ThemeProvider theme={togglePrint ? printTheme : theme}>
             <Container>
