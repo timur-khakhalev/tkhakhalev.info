@@ -104,7 +104,6 @@ export const Resume : FC = () => {
     const togglePrint = useSelector((state: RootState) => state.printToggle.print);
     const toggleStatus = useSelector((state: RootState) => state.versionToggle.version);
     const toggleLang = useSelector((state: RootState) => state.langToggle.lang);
-    const items = useSelector((state: RootState) => state.itemsDelivery.items);
     const classes = useStyles();
 
     const dispatch = useDispatch()

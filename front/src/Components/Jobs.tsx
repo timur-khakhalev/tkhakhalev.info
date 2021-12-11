@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { makeStyles } from '@mui/styles';
-import Typography from '@mui/material/Typography';
+import {Typography} from '@mui/material/';
 import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
 import { Loading } from './Loading';

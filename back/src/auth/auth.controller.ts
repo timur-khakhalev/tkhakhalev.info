@@ -10,9 +10,4 @@ export class AuthController {
     loginUser(@Body() data: AuthDto) {
         return this.authService.validateUser(data)
     }
-
-    // @Post('/register')
-    // registerUser(@Body() data: AuthDto) {
-    //     return this.authService.register(data)
-    // }
 }

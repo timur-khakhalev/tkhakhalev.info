@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import jwt from 'jsonwebtoken'
 import { RootState } from '../Redux/store'
@@ -18,7 +18,6 @@ export const Gates: FC = () => {
         if (token) {
             const decoded: any = jwt.decode(token)
             const expiresInSec = decoded.exp*1000 - Date.parse(new Date().toString())
-            console.log(expiresInSec)
             if (expiresInSec > 0) {
                 setTimeout(() => {
                     dispatch(expiredToggle())

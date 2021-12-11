@@ -13,16 +13,6 @@ export class AuthService {
         private jwtService: JwtService
     ){}
 
-    // async register(userdata: AuthDto): Promise<any> {
-    //     const hash = await bcrypt.hash(userdata.password, 7)
-    //     const salt = await bcrypt.genSalt()
-    //     console.log(salt)
-    //     userdata.password = hash
-    //     console.log(userdata)
-    //     const createdData = new this.authModel(userdata)
-    //     return createdData.save()
-    // }
-
     async validateUser(user: AuthDto): Promise<object> {
         const findInDb: AuthDto = await this.authModel.findOne({ login: user.login })
         if (findInDb) {

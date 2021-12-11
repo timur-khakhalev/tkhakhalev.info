@@ -1,7 +1,6 @@
 import { HttpService } from '@nestjs/axios'
-import { AxiosResponse } from 'axios';
 import { Injectable } from '@nestjs/common';
-import { map, switchMap, Observable, forkJoin, delay, concat, of, toArray, mergeMap } from 'rxjs';
+import { map, switchMap, Observable, delay, concat, of, toArray, mergeMap } from 'rxjs';
 
 @Injectable()
 export class GithubService {
@@ -18,7 +17,7 @@ export class GithubService {
               if (a.updated_at < b.updated_at) return 1
               return 0
             }).map(res => {
-              return of(null).pipe(delay(500), mergeMap(() => {
+              return of(null).pipe(delay(1000), mergeMap(() => {
                 return this.getCommits(res)
             }))
             }
@@ -27,7 +26,7 @@ export class GithubService {
       })
       )}
 
-  getCommits(result: any): Observable<any> {
+  getCommits(result: {commits_url: string}): Observable<any> {
     const link = result.commits_url.replace(/{\/sha}/, '')
     return this.http.get(link)
     .pipe(map((res) => {

@@ -2,10 +2,6 @@ import {FC} from 'react'
 import { Typography, Box } from '@mui/material'
 import Error from '../img/404error.gif'
 
-interface Props {
-    
-}
-
 export const NotFound: FC = () => {
     return (
         <div>

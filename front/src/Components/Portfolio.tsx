@@ -44,9 +44,9 @@ export const Portfolio: FC = () => {
 
     const [gitdata, setGitdata] = useState<any>()
     useEffect(() => {
-        // axios.get(`http://localhost:3000/github`).then((response) => {
-        //     setGitdata(response.data)
-        // })
+        axios.get(`http://localhost:3000/github`).then((response) => {
+            setGitdata(response.data)
+        })
     }, [])
     if (gitdata) {
         return (

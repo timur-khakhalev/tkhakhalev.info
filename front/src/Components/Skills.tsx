@@ -56,10 +56,9 @@ export const Skills : FC = () => {
                         {v.split(';').map((_v) => {
                             if (v) {
                             console.log(_v)
-                                return <>
-                                <Grid item xs={3}>
+                                return <Grid item xs={3}>
                                 <Typography variant="body1" className={classes.box}>{_v}</Typography>
-                            </Grid></>
+                            </Grid>
                             }
                         })}</>
                     case 'technologies':
@@ -70,10 +69,9 @@ export const Skills : FC = () => {
                             {v.split(';').map((_v) => {
                                 if (v) {
                                     console.log(_v)
-                                    return <>
-                                        <Grid item xs={3}>
+                                    return <Grid item xs={3}>
                                             <Typography variant="body1" className={classes.box}>{_v}</Typography>
-                                        </Grid></>
+                                        </Grid>
                                 }
                             })}</>
                     case 'patterns':
@@ -84,10 +82,9 @@ export const Skills : FC = () => {
                             {v.split(';').map((_v) => {
                                 if (v) {
                                     console.log(_v)
-                                    return <>
-                                        <Grid item xs={3}>
+                                    return <Grid item xs={3}>
                                             <Typography variant="body1" className={classes.box}>{_v}</Typography>
-                                        </Grid></>
+                                        </Grid>
                                 }
                             })}</>
                     case 'instruments':
@@ -98,10 +95,9 @@ export const Skills : FC = () => {
                             {v.split(';').map((_v) => {
                                 if (v) {
                                     console.log(_v)
-                                    return <>
-                                        <Grid item xs={3}>
+                                    return <Grid item xs={3}>
                                             <Typography variant="body1" className={classes.box}>{_v}</Typography>
-                                        </Grid></>
+                                        </Grid>
                                 }
                             })}</>
                     default:

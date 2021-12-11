@@ -1,5 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit'
-import jwt from 'jsonwebtoken'
 
 export const toggleSlice = createSlice({
     name: 'toggles',
@@ -8,7 +7,6 @@ export const toggleSlice = createSlice({
         lang: true,
         loggedIn: false,
         expiredToken: false,
-        expiredIn: 0,
         snack: false,
         items: {
             '_id': '',
@@ -36,11 +34,9 @@ export const toggleSlice = createSlice({
         versionToggle: (state) => { state.version = !state.version },
         printToggle: (state) => { state.print = !state.print },
         langToggle: (state) => { state.lang = !state.lang },
-        checkLoggedIn: (state, action) => { 
+        checkLoggedIn: (state) => { 
             state.loggedIn = true
             state.expiredToken = false
-            const decoded: any = jwt.decode(action.payload.payload)
-            state.expiredIn = (decoded!.exp - decoded!.iat) * 1000
         },
         expiredToggle: (state) => { state.expiredToken = true },
         snackToggle: (state) => { state.snack = !state.snack },

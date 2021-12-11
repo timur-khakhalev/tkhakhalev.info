@@ -1,4 +1,4 @@
-import React, {FC, useState, useEffect} from 'react'
+import {FC, useState, useEffect} from 'react'
 import axios from 'axios'
 import dotenv from 'dotenv'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -156,7 +156,7 @@ export const ItemsCMS: FC = () => {
                                             <Button variant="contained" type="submit">Send</Button>
                                             </form>
                                         </>
-                                    } else {return <></>}
+                                    } else {return <Loading/>}
                                 case 'softSkillsRu':
                                     if (v) {
                                     return <>
@@ -174,7 +174,7 @@ export const ItemsCMS: FC = () => {
                                             <Button variant="contained" type="submit">Send</Button>
                                         </form>
                                     </>
-                                    } else { return <></>}
+                                    } else { return <Loading />}
                                 case 'hardSkills':
                                     return <>
                                     <Typography variant="h6" align="center">
@@ -182,8 +182,7 @@ export const ItemsCMS: FC = () => {
                                     </Typography>
                                         {Object.entries(items.hardSkills).map(([_k, _v]) => {
                                             if (_v[0]) {
-                                                return <>
-                                                    <form onSubmit={handleSubmit(onSubmit)}>
+                                                return <form onSubmit={handleSubmit(onSubmit)}>
                                                         <TextField
                                                             label={_k}
                                                             margin='normal'
@@ -194,7 +193,6 @@ export const ItemsCMS: FC = () => {
                                                         />
                                                         <Button variant="contained" type="submit">Send</Button>
                                                     </form>
-                                                </>
                                             }
                                             })}
                                         </>
@@ -205,8 +203,7 @@ export const ItemsCMS: FC = () => {
                                         </Typography>
                                         {Object.entries(items.about).map(([_k, _v]) => {
                                             if (_v) {
-                                            return <>
-                                            <form onSubmit={handleSubmit(onSubmit)}>
+                                            return <form onSubmit={handleSubmit(onSubmit)}>
                                                 <TextField
                                                     label={_k}
                                                     margin='normal'
@@ -217,25 +214,21 @@ export const ItemsCMS: FC = () => {
                                                 />
                                                 <Button variant="contained" type="submit">Send</Button>
                                             </form>
-                                            </>
                                             }
                                         })}
                                     </>
                                 case '_id':
                                     if (v) {
-                                    return <>
-                                        <TextField
+                                    return <TextField
                                             label={k}
                                             margin='normal'
                                             defaultValue={v}
                                             disabled
                                         />
-                                    </>
-                                    } else {return <></>}
+                                    } else { return <Loading />}
                                 default:
                                     if (v) {
-                                    return <>
-                                        <form onSubmit={handleSubmit(onSubmit)}>
+                                    return <form onSubmit={handleSubmit(onSubmit)}>
                                         <TextField
                                             label={k}
                                             margin='normal'
@@ -245,7 +238,6 @@ export const ItemsCMS: FC = () => {
                                         />
                                             <Button variant="contained" type="submit">Send</Button>
                                     </form>
-                                    </>
                                     }
                             }
                         })
