@@ -1,0 +1,11 @@
+node_modules
+
+.idea
+.next
+.swc
+ssl
+
+.env
+package-lock.json
+yarn.lock
+tsconfig.json
