@@ -11,16 +11,27 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 export default function Gates () {
 
+  const [response, setResponse] = useState({ type: '', msg: '', status: 0 })
+
+  const logHandler = (res) => {
+    setResponse(res)
+    setSnackbar(true)
+  }
+
   const [authed, setAuthed] = useState(false)
 
   const checkIsAuthorized = () => {
-    const token = localStorage.getItem('accessToken')
-    if (token) {
-      const decodedToken = jwt.decode(token)
-      if (decodedToken) {
-        if (new Date(decodedToken.exp * 1000 ) - new Date() > 0)
-          setAuthed(true)
+    try {
+      const token = localStorage.getItem('accessToken')
+      if (token) {
+        const decodedToken = jwt.decode(token)
+        if (decodedToken) {
+          if (new Date(decodedToken.exp * 1000) - new Date() > 0)
+            setAuthed(true)
+        }
       }
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -37,13 +48,6 @@ export default function Gates () {
 
     setSnackbar(false);
   };
-
-  const [response, setResponse] = useState({ type: '', msg: '', status: 0 })
-
-  const logHandler = (res) => {
-    setResponse(res)
-    setSnackbar(true)
-  }
 
   return (
     <div>

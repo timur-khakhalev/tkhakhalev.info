@@ -7,12 +7,15 @@ export function FetchedDataWrapper ({ children }) {
 
   const [data, setData] = useState({})
 
-  const fetching = async () => {
-    const { data } = await axios.get(`${process.env.BACKEND_URL}/resume`)
-    setData(data)
-  }
-
-  useEffect(() => {
+  useEffect( () => {
+    const fetching = async () => {
+      try {
+        const { data } = await axios.get(`${process.env.BACKEND_URL}/resume`)
+        setData(data)
+      } catch (e) {
+        console.log(e)
+      }
+    }
     fetching()
   }, [])
 

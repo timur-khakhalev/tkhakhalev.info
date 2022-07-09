@@ -15,17 +15,16 @@ export default function Github ({ language }) {
 
   const [data, setData] = useState({})
 
-  const fetch = async () => {
-    try {
-      const { data } = await axios.get(`${process.env.BACKEND_URL}/github`)
-      setData(data)
-    } catch (e) {
-      console.log(e)
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const { data } = await axios.get(`${process.env.BACKEND_URL}/github`)
+        setData(data)
+      } catch (e) {
+        console.log(e)
+      }
     }
-  }
-
-  useEffect(async () => {
-    await fetch()
+    fetch()
   }, [])
 
   if (data.length > 0) {
@@ -58,10 +57,7 @@ export default function Github ({ language }) {
                       <Box>
                         {repo.topics.map(topic => {
                           return (
-                            <Chip sx={{my: '.5em', mr: '.5em'}} label={topic}/>
-                            // <Typography key={topic} variant='caption'>
-                            //   {topic}&nbsp;
-                            // </Typography>
+                            <Chip sx={{my: '.5em', mr: '.5em'}} key={topic} label={topic}/>
                           )
                         })}
                       </Box>

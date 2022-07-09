@@ -18,8 +18,12 @@ export default function Auth ({ logHandler }) {
       logHandler({ type: 'success', msg: 'Login success', status: res.status })
       router.reload()
     } catch (e) {
-      console.log(e.response.data.trace[0])
-      logHandler({ type: 'error', msg: e.response.data.trace[0], status: e.response.status })
+      if (e.response.data) {
+        console.log(e.response.data.trace[0])
+        logHandler({ type: 'error', msg: e.response.data.trace[0], status: e.response.status })
+      }
+        else
+          console.log(e)
     }
   }
 
@@ -36,13 +40,14 @@ export default function Auth ({ logHandler }) {
     await handleAuth()
   }
   return (
-    <Box sx={{m: '0 auto', width: '20vw'}}>
+    <Box sx={{m: '0 auto', width: '50%'}}>
       <Paper sx={{m: '1em', p: '1em', width: 'auto'}}>
         <Stack>
           <Typography variant="h6" color="initial" align="center">
             THA GATES
           </Typography>
           <form onSubmit={handleSubmit}>
+            <Stack>
             <TextField
               autoFocus
               id="login"
@@ -50,6 +55,7 @@ export default function Auth ({ logHandler }) {
               margin="dense"
               type="login"
               name='username'
+              size='small'
               value={creds.username || ''}
               onChange={handleFormChange}
             />
@@ -59,12 +65,14 @@ export default function Auth ({ logHandler }) {
               margin="dense"
               name='password'
               type="password"
+              size='small'
               value={creds.password || ''}
               onChange={handleFormChange}
             />
-            <Button type="submit">
+            <Button size='small' variant='outlined' type="submit">
               Send
             </Button>
+            </Stack>
           </form>
         </Stack>
       </Paper>
