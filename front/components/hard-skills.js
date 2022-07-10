@@ -10,7 +10,7 @@ export default function hardSkills ({ hardSkills }) {
                   Stack
                 </Typography>
                 <Grid container>
-                  {hardSkills.stack.split(';').map(skill => {
+                  {hardSkills.technologiesStack.split(';').map(skill => {
                     return (
                       <Grid item key={skill} xs={6} sm={2}>
                         <Typography variant='subtitle1'>
@@ -26,7 +26,7 @@ export default function hardSkills ({ hardSkills }) {
                   Technologies
                 </Typography>
                 <Grid container>
-                  {hardSkills.technologies.split(';').map(skill => {
+                  {hardSkills.standards.split(';').map(skill => {
                     return (
                       <Grid item key={skill} xs={6} sm={2}>
                         <Typography variant='subtitle1'>

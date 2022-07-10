@@ -54,10 +54,10 @@ const resumeSchema = new Schema({
     patterns: {
       type: String
     },
-    technologies: {
+    standards: {
       type: String
     },
-    stack: {
+    technologiesStack: {
       type: String
     }
   },

@@ -32,7 +32,7 @@ export default function Github ({ language }) {
       <Box sx={{ width: '100%', height: '100%', m: '0em auto 1em' }}>
         <Paper sx={{ m: '1em auto', p: '1em' }}>
           <Typography variant='h4' gutterBottom>
-            { language === 'en' ? 'Portfolio' : 'Портфолио'}
+            { language === 'en' ? 'Pet projects' : 'Портфолио'}
           </Typography>
           <Grid container justifyContent="center" alignItems="center">
             {data.map(repo => {
