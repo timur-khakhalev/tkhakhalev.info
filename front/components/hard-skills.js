@@ -7,7 +7,7 @@ export default function hardSkills ({ hardSkills }) {
             <div>
               <Box sx={{ m: '1em auto' }}>
                 <Typography variant='h6'>
-                  Stack
+                  Technologies stack
                 </Typography>
                 <Grid container>
                   {hardSkills.technologiesStack.split(';').map(skill => {
@@ -23,7 +23,7 @@ export default function hardSkills ({ hardSkills }) {
               </Box>
               <Box sx={{ m: '1em auto' }}>
                 <Typography variant='h6'>
-                  Technologies
+                  Standards
                 </Typography>
                 <Grid container>
                   {hardSkills.standards.split(';').map(skill => {
